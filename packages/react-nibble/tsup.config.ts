@@ -11,17 +11,33 @@ const pkg = JSON.parse(readFileSync(join(here, 'package.json'), 'utf8')) as {
   dependencies?: Record<string, string>
 }
 
-// External: ONLY direct dependencies + peer dependencies. Workspace deps (@react-nibble/*)
-// are INLINED — this is the whole point of the facade.
+// External: direct dependencies + peer dependencies + node builtins.
+// Workspace deps (@react-nibble/*) are INLINED — this is the whole point of the facade.
+// Node builtins must cover both prefixed (node:fs) and bare (fs) forms because
+// esbuild rewrites node: prefixes when platform is 'node' in the server dist output.
+const nodeBuiltins = [
+  'fs',
+  'path',
+  'url',
+  'http',
+  'module',
+  'os',
+  'crypto',
+  'child_process',
+  'util',
+  'stream',
+  'events',
+  'buffer',
+  'net',
+  'tls',
+  'https',
+  'querystring',
+]
 const external = [
   ...Object.keys(pkg.peerDependencies ?? {}),
   ...Object.keys(pkg.dependencies ?? {}),
-  // node builtins we actually use
-  'node:fs',
-  'node:path',
-  'node:url',
-  'node:http',
-  'node:module',
+  ...nodeBuiltins,
+  ...nodeBuiltins.map((b) => `node:${b}`),
 ]
 
 export default defineConfig({
