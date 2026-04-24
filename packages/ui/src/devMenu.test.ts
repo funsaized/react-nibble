@@ -38,4 +38,22 @@ describe('registerDevMenu', () => {
     __setDevSettingsForTests(null)
     expect(() => registerDevMenu('Test', vi.fn())).not.toThrow()
   })
+
+  test('no-op when DevSettings exists but addMenuItem is undefined', () => {
+    __setDevSettingsForTests({})
+    expect(() => registerDevMenu('Test', vi.fn())).not.toThrow()
+  })
+
+  test('reset allows re-registration of same label', () => {
+    const mockAddMenuItem = vi.fn()
+    __setDevSettingsForTests({ addMenuItem: mockAddMenuItem })
+
+    registerDevMenu('Toggle', vi.fn())
+    expect(mockAddMenuItem).toHaveBeenCalledTimes(1)
+
+    __resetDevMenuForTests()
+    __setDevSettingsForTests({ addMenuItem: mockAddMenuItem })
+    registerDevMenu('Toggle', vi.fn())
+    expect(mockAddMenuItem).toHaveBeenCalledTimes(2)
+  })
 })
