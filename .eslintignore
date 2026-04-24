@@ -1,0 +1,7 @@
+node_modules/
+dist/
+coverage/
+.changeset/
+*.lock
+bun.lock
+bun.lockb
