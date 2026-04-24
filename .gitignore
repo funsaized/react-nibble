@@ -39,3 +39,6 @@ android/.gradle/
 
 # Sisyphus evidence
 .sisyphus/evidence/
+
+# TypeScript build info
+*.tsbuildinfo
