@@ -37,15 +37,15 @@ unset NIBBLE_TELEMETRY
 
 When telemetry is enabled, each event contains exactly these fields:
 
-| Field | Type | Description |
-|---|---|---|
-| `event` | string | One of: `inspector-opened`, `component-tapped`, `editor-launched`, `editor-launch-failed` |
-| `ts` | string | ISO 8601 timestamp (e.g. `2025-06-15T10:30:00.000Z`) |
-| `pkgVersion` | string | `react-nibble` package version |
-| `node` | string? | Node.js version (dev server only, e.g. `v22.0.0`) |
-| `os` | string? | `process.platform` (dev server only, e.g. `darwin`, `linux`) |
-| `editor` | string? | Configured editor name (e.g. `zed`, `code`) |
-| `sessionId` | string | Per-session anonymous random string. Rotates every dev-server start. |
+| Field        | Type    | Description                                                                               |
+| ------------ | ------- | ----------------------------------------------------------------------------------------- |
+| `event`      | string  | One of: `inspector-opened`, `component-tapped`, `editor-launched`, `editor-launch-failed` |
+| `ts`         | string  | ISO 8601 timestamp (e.g. `2025-06-15T10:30:00.000Z`)                                      |
+| `pkgVersion` | string  | `react-nibble` package version                                                            |
+| `node`       | string? | Node.js version (dev server only, e.g. `v22.0.0`)                                         |
+| `os`         | string? | `process.platform` (dev server only, e.g. `darwin`, `linux`)                              |
+| `editor`     | string? | Configured editor name (e.g. `zed`, `code`)                                               |
+| `sessionId`  | string  | Per-session anonymous random string. Rotates every dev-server start.                      |
 
 These fields match the `TelemetryEvent` type in [`packages/core/src/telemetry/types.ts`](../packages/core/src/telemetry/types.ts).
 

@@ -52,11 +52,7 @@ import { InspectorRoot } from 'react-nibble'
 import config from './tamagui.config'
 
 export default function Layout({ children }) {
-  return (
-    <InspectorRoot tamaguiConfig={config}>
-      {children}
-    </InspectorRoot>
-  )
+  return <InspectorRoot tamaguiConfig={config}>{children}</InspectorRoot>
 }
 ```
 
@@ -73,42 +69,42 @@ Shake your device or open the DevMenu and tap "Toggle react-nibble Inspector". T
 
 ## Features
 
-| Feature | Status | Notes |
-|---|---|---|
-| App → Editor navigation | ✅ | Tap a component, editor opens at source |
-| Tamagui integration | ✅ | Inspector adopts host tokens, themes, dark mode |
-| Multi-editor support | ✅ | Zed, VSCode, Cursor, WebStorm, Vim, and more |
-| Vite dev-server plugin | ✅ | `/__nibble/open-source` endpoint with path guard |
-| Hierarchy picker (Above/Under) | 🚧 | Phase 2 |
-| Style panel + box model | 🚧 | Phase 2 |
-| Editor → App cursor sync | ❌ | Deferred — blocked by Zed extension API limits |
+| Feature                        | Status | Notes                                            |
+| ------------------------------ | ------ | ------------------------------------------------ |
+| App → Editor navigation        | ✅     | Tap a component, editor opens at source          |
+| Tamagui integration            | ✅     | Inspector adopts host tokens, themes, dark mode  |
+| Multi-editor support           | ✅     | Zed, VSCode, Cursor, WebStorm, Vim, and more     |
+| Vite dev-server plugin         | ✅     | `/__nibble/open-source` endpoint with path guard |
+| Hierarchy picker (Above/Under) | 🚧     | Phase 2                                          |
+| Style panel + box model        | 🚧     | Phase 2                                          |
+| Editor → App cursor sync       | ❌     | Deferred — blocked by Zed extension API limits   |
 
 ## Supported editors
 
 Any editor supported by [`launch-editor`](https://www.npmjs.com/package/launch-editor) works. Set `LAUNCH_EDITOR` in `.env.development`:
 
-| Editor | `LAUNCH_EDITOR` value |
-|---|---|
-| Zed | `zed` |
-| VSCode | `code` |
-| VSCode Insiders | `code-insiders` |
-| Cursor | `cursor` |
-| VSCodium | `codium` or `vscodium` |
-| WebStorm | `webstorm` |
-| IntelliJ IDEA | `idea` |
-| PhpStorm | `phpstorm` |
-| PyCharm | `pycharm` |
-| RubyMine | `rubymine` |
-| GoLand | `goland` |
-| CLion | `clion` |
-| Rider | `rider` |
-| Sublime Text | `subl` or `sublime_text` |
-| Vim | `vim` |
-| Neovim | `nvim` |
-| MacVim | `mvim` |
-| Emacs | `emacs` |
-| Notepad++ | `notepad++` |
-| Atom | `atom` |
+| Editor          | `LAUNCH_EDITOR` value    |
+| --------------- | ------------------------ |
+| Zed             | `zed`                    |
+| VSCode          | `code`                   |
+| VSCode Insiders | `code-insiders`          |
+| Cursor          | `cursor`                 |
+| VSCodium        | `codium` or `vscodium`   |
+| WebStorm        | `webstorm`               |
+| IntelliJ IDEA   | `idea`                   |
+| PhpStorm        | `phpstorm`               |
+| PyCharm         | `pycharm`                |
+| RubyMine        | `rubymine`               |
+| GoLand          | `goland`                 |
+| CLion           | `clion`                  |
+| Rider           | `rider`                  |
+| Sublime Text    | `subl` or `sublime_text` |
+| Vim             | `vim`                    |
+| Neovim          | `nvim`                   |
+| MacVim          | `mvim`                   |
+| Emacs           | `emacs`                  |
+| Notepad++       | `notepad++`              |
+| Atom            | `atom`                   |
 
 For editors not in this list, use the `onLaunch` escape hatch. See [docs/editors.md](./docs/editors.md) for per-editor setup instructions.
 

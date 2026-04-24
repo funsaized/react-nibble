@@ -260,8 +260,8 @@ This completely bypasses `launch-editor`. You control how the editor is invoked.
 
 **Common editors that need `onLaunch`**:
 
-| Editor | Why | Approach |
-|---|---|---|
-| Neovim (`nvim`) | Not in `launch-editor`'s argument map — line/column not passed | Use `nvim-remote` or `nvim --server` |
-| Xcode (`xed`) | Not in `launch-editor` | Use `xed --line <line> <file>` |
-| Android Studio | Not in `launch-editor` with line/column support | Use JetBrains CLI: `studio --line <line> --column <col> <file>` |
+| Editor          | Why                                                            | Approach                                                        |
+| --------------- | -------------------------------------------------------------- | --------------------------------------------------------------- |
+| Neovim (`nvim`) | Not in `launch-editor`'s argument map — line/column not passed | Use `nvim-remote` or `nvim --server`                            |
+| Xcode (`xed`)   | Not in `launch-editor`                                         | Use `xed --line <line> <file>`                                  |
+| Android Studio  | Not in `launch-editor` with line/column support                | Use JetBrains CLI: `studio --line <line> --column <col> <file>` |
