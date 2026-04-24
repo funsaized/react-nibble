@@ -1,0 +1,55 @@
+name: Publish Dry Run
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  dry-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: bun install --frozen-lockfile
+      - run: bun run --filter react-nibble build
+
+      - name: npm publish --dry-run (facade)
+        working-directory: packages/react-nibble
+        run: |
+          npm publish --dry-run --access public 2>&1 | tee /tmp/publish.log
+
+      - name: Ensure no workspace:* leaked into published package
+        working-directory: packages/react-nibble
+        run: |
+          npm pack --pack-destination /tmp
+          mkdir -p /tmp/facade-check
+          tar -xzf /tmp/react-nibble-*.tgz -C /tmp/facade-check
+          if grep -rn 'workspace:' /tmp/facade-check/package/; then
+            echo "::error::workspace:* reference leaked into the published facade"
+            exit 1
+          fi
+          echo "No workspace:* references in packed tarball"
+
+      - name: Ensure dist has no @react-nibble imports
+        run: |
+          if grep -rn 'from "@react-nibble' packages/react-nibble/dist/ 2>/dev/null; then
+            echo "::error::@react-nibble/* imports not inlined in dist"
+            exit 1
+          fi
+          echo "All @react-nibble/* imports inlined in dist"
+
+      - name: Check bundle size (facade index.js + server.js under 300KB total)
+        working-directory: packages/react-nibble
+        run: |
+          total=$(stat -c %s dist/index.js dist/server.js | awk '{sum+=$1} END{print sum}')
+          echo "Facade bundle total: $total bytes"
+          if [ "$total" -gt $((300 * 1024)) ]; then
+            echo "::warning::Facade bundle > 300KB ($total bytes). Not failing yet, but investigate."
+          fi
