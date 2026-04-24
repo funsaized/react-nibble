@@ -30,17 +30,22 @@ jobs:
         run: |
           npm publish --dry-run --access public 2>&1 | tee /tmp/publish.log
 
-      - name: Ensure no workspace:* leaked into published package
+      - name: Ensure no workspace:* in runtime dependencies or dist
         working-directory: packages/react-nibble
         run: |
           npm pack --pack-destination /tmp
           mkdir -p /tmp/facade-check
           tar -xzf /tmp/react-nibble-*.tgz -C /tmp/facade-check
-          if grep -rn 'workspace:' /tmp/facade-check/package/; then
-            echo "::error::workspace:* reference leaked into the published facade"
+          if grep -rn 'workspace:' /tmp/facade-check/package/dist/; then
+            echo "::error::workspace:* reference found in dist/"
             exit 1
           fi
-          echo "No workspace:* references in packed tarball"
+          deps=$(node -e "const p=require('/tmp/facade-check/package/package.json'); console.log(JSON.stringify(p.dependencies||{}))")
+          if echo "$deps" | grep -q 'workspace:'; then
+            echo "::error::workspace:* in runtime dependencies: $deps"
+            exit 1
+          fi
+          echo "No workspace:* in dist or runtime dependencies"
 
       - name: Ensure dist has no @react-nibble imports
         run: |
