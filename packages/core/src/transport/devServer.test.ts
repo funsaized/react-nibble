@@ -7,9 +7,7 @@ afterEach(() => {
 
 describe('resolveDevServerBase', () => {
   test('returns override when provided', () => {
-    expect(resolveDevServerBase('http://192.168.1.10:19000/')).toBe(
-      'http://192.168.1.10:19000'
-    )
+    expect(resolveDevServerBase('http://192.168.1.10:19000/')).toBe('http://192.168.1.10:19000')
   })
 
   test('strips trailing slashes from override', () => {

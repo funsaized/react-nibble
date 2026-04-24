@@ -70,17 +70,17 @@ describe('TelemetryCollector', () => {
 
   test('payload event field matches allowed set', () => {
     const collector = new TelemetryCollector({ enabled: true })
-    const validEvents: Array<'inspector-opened' | 'component-tapped' | 'editor-launched' | 'editor-launch-failed'> = [
-      'inspector-opened',
-      'component-tapped',
-      'editor-launched',
-      'editor-launch-failed',
-    ]
+    const validEvents: Array<
+      'inspector-opened' | 'component-tapped' | 'editor-launched' | 'editor-launch-failed'
+    > = ['inspector-opened', 'component-tapped', 'editor-launched', 'editor-launch-failed']
     for (const event of validEvents) {
       mockFetch.mockClear()
       collector.record(event)
       expect(mockFetch).toHaveBeenCalledOnce()
-      const body = JSON.parse((mockFetch.mock.calls[0]![1] as { body: string }).body) as Record<string, unknown>
+      const body = JSON.parse((mockFetch.mock.calls[0]![1] as { body: string }).body) as Record<
+        string,
+        unknown
+      >
       expect(body['event']).toBe(event)
     }
   })

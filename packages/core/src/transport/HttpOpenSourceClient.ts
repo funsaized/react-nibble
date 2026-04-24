@@ -43,11 +43,14 @@ export class HttpOpenSourceClient implements OpenSourceClient {
     } catch (err) {
       if (err instanceof Error && err.name === 'AbortError') {
         throw new Error(
-          `react-nibble: dev server unreachable at ${base} (timeout after ${timeout}ms)`
+          `react-nibble: dev server unreachable at ${base} (timeout after ${timeout}ms)`,
+          { cause: err }
         )
       }
       if (err instanceof TypeError) {
-        throw new Error(`react-nibble: dev server unreachable at ${base} (${err.message})`)
+        throw new Error(`react-nibble: dev server unreachable at ${base} (${err.message})`, {
+          cause: err,
+        })
       }
       throw err
     } finally {

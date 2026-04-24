@@ -47,9 +47,7 @@ describe('HttpOpenSourceClient.openSource', () => {
       json: () => Promise.reject(new Error('not json')),
     })
     const client = new HttpOpenSourceClient({ devServerUrl: 'http://localhost:8081' })
-    await expect(client.openSource(loc)).rejects.toThrow(
-      'react-nibble: dev server returned 404'
-    )
+    await expect(client.openSource(loc)).rejects.toThrow('react-nibble: dev server returned 404')
   })
 
   test('rejects with unreachable on network error (TypeError)', async () => {

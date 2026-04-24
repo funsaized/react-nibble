@@ -20,7 +20,6 @@ export class TelemetryCollector {
 
     if (this.enabled && !noticePrinted) {
       noticePrinted = true
-      // eslint-disable-next-line no-console
       console.info(
         'react-nibble telemetry enabled. See docs/telemetry.md to learn what is collected.'
       )
