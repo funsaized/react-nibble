@@ -1,0 +1,77 @@
+{
+  "name": "react-nibble",
+  "version": "0.1.0",
+  "description": "RN inspector with Zed-first app→editor navigation and first-class Tamagui + One framework integration",
+  "license": "MIT",
+  "author": "funsaized",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/funsaized/react-nibble.git"
+  },
+  "bugs": {
+    "url": "https://github.com/funsaized/react-nibble/issues"
+  },
+  "homepage": "https://github.com/funsaized/react-nibble#readme",
+  "keywords": [
+    "react-native",
+    "inspector",
+    "devtools",
+    "zed",
+    "tamagui",
+    "one",
+    "vite"
+  ],
+  "sideEffects": false,
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js",
+      "require": "./dist/server.cjs",
+      "default": "./dist/server.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prepublishOnly": "bun run build"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.73.0",
+    "tamagui": ">=1.90.0",
+    "vite": ">=5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "launch-editor": "^2.6.0"
+  },
+  "devDependencies": {
+    "@react-nibble/core": "workspace:*",
+    "@react-nibble/ui": "workspace:*",
+    "@react-nibble/server": "workspace:*"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
