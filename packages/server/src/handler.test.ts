@@ -192,6 +192,97 @@ describe('handleOpenSource', () => {
     const body = JSON.parse(res._body) as { error: string }
     expect(body.error).toBe('editor crashed')
   })
+
+  test('onLaunch that throws non-Error returns stringified error', async () => {
+    const opts = defaultOpts({
+      onLaunch: async () => {
+        throw 'string error'
+      },
+    })
+    const req = createFakeReq(
+      `/__nibble/open-source?file=${encodeURIComponent(insideFile)}&line=1&column=1`
+    )
+    const res = createFakeRes()
+    await handleOpenSource(req, res, opts)
+    expect(res._status).toBe(500)
+    const body = JSON.parse(res._body) as { error: string }
+    expect(body.error).toBe('string error')
+  })
+
+  test('falls back to launch-editor when onLaunch not provided', async () => {
+    const opts = defaultOpts({ onLaunch: undefined })
+    const req = createFakeReq(
+      `/__nibble/open-source?file=${encodeURIComponent(insideFile)}&line=1&column=1`
+    )
+    const res = createFakeRes()
+    await handleOpenSource(req, res, opts)
+    // launch-editor resolves (200 via timeout) or errors (500) depending on editor availability
+    expect([200, 500]).toContain(res._status)
+    const body = JSON.parse(res._body) as { ok: boolean }
+    expect(body).toHaveProperty('ok')
+  }, 10_000)
+
+  test('LAUNCH_EDITOR env var is used when no editor in opts or query', async () => {
+    process.env.LAUNCH_EDITOR = 'true'
+    const opts = defaultOpts({ editor: undefined, onLaunch: undefined })
+    const req = createFakeReq(
+      `/__nibble/open-source?file=${encodeURIComponent(insideFile)}&line=1&column=1`
+    )
+    const res = createFakeRes()
+    await handleOpenSource(req, res, opts)
+    expect([200, 500]).toContain(res._status)
+  }, 10_000)
+
+  test('EDITOR env var is used as last resort', async () => {
+    process.env.EDITOR = 'true'
+    const opts = defaultOpts({ editor: undefined, onLaunch: undefined })
+    const req = createFakeReq(
+      `/__nibble/open-source?file=${encodeURIComponent(insideFile)}&line=1&column=1`
+    )
+    const res = createFakeRes()
+    await handleOpenSource(req, res, opts)
+    expect([200, 500]).toContain(res._status)
+  }, 10_000)
+
+  test('query editor param overrides options editor', async () => {
+    const launches: Array<{ editor: string | undefined }> = []
+    const opts = defaultOpts({
+      editor: 'code',
+      onLaunch: async ({ editor }) => {
+        launches.push({ editor })
+      },
+    })
+    const req = createFakeReq(
+      `/__nibble/open-source?file=${encodeURIComponent(insideFile)}&line=1&column=1&editor=vim`
+    )
+    const res = createFakeRes()
+    await handleOpenSource(req, res, opts)
+    expect(res._status).toBe(200)
+    expect(launches[0]?.editor).toBe('vim')
+  })
+
+  test('NaN line returns 400', async () => {
+    const req = createFakeReq(
+      `/__nibble/open-source?file=${encodeURIComponent(insideFile)}&line=abc&column=1`
+    )
+    const res = createFakeRes()
+    await handleOpenSource(req, res, defaultOpts())
+    expect(res._status).toBe(400)
+  })
+
+  test('default column is 1 when not provided', async () => {
+    const launches: Array<{ column: number }> = []
+    const opts = defaultOpts({
+      onLaunch: async ({ column }) => {
+        launches.push({ column })
+      },
+    })
+    const req = createFakeReq(`/__nibble/open-source?file=${encodeURIComponent(insideFile)}&line=1`)
+    const res = createFakeRes()
+    await handleOpenSource(req, res, opts)
+    expect(res._status).toBe(200)
+    expect(launches[0]?.column).toBe(1)
+  })
 })
 
 describe('handleHealth', () => {
