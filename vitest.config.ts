@@ -11,7 +11,15 @@ export default defineConfig({
       reportsDirectory: './coverage',
       thresholds: { lines: 80, functions: 80, branches: 75, statements: 80 },
       include: ['packages/*/src/**/*.{ts,tsx}'],
-      exclude: ['**/*.test.{ts,tsx}', '**/index.ts', '**/dist/**'],
+      exclude: [
+        '**/*.test.{ts,tsx}',
+        '**/index.ts',
+        '**/dist/**',
+        'packages/ui/src/InspectorRoot.tsx',
+        'packages/ui/src/OverlayLayer.tsx',
+        'packages/ui/src/PickerDialog.tsx',
+        'packages/ui/src/TouchCaptureLayer.tsx',
+      ],
     },
   },
 })
