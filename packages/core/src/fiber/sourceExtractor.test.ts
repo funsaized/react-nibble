@@ -47,6 +47,17 @@ describe('parseCallerSource', () => {
   test('returns null when fileName is missing', () => {
     expect(parseCallerSource({ lineNumber: 1 })).toBeNull()
   })
+
+  test('defaults lineNumber to 1 and columnNumber to 1 when absent', () => {
+    const result = parseCallerSource({ fileName: '/src/Widget.tsx' })
+    expect(result).toEqual({
+      componentName: undefined,
+      relativePath: '/src/Widget.tsx',
+      absolutePath: '/src/Widget.tsx',
+      lineNumber: 1,
+      columnNumber: 1,
+    })
+  })
 })
 
 describe('extractSourceLocation', () => {
@@ -104,5 +115,35 @@ describe('extractSourceLocation', () => {
   test('returns null for all-null fiber', () => {
     const fiber = {}
     expect(extractSourceLocation(fiber)).toBeNull()
+  })
+
+  test('returns column as undefined when _debugSource has no columnNumber', () => {
+    const fiber = {
+      _debugSource: { fileName: '/src/App.tsx', lineNumber: 10 },
+    }
+    const result = extractSourceLocation(fiber)
+    expect(result).toEqual({ file: '/src/App.tsx', line: 10, column: undefined })
+  })
+
+  test('handles _debugSource with columnNumber: 0', () => {
+    const fiber = {
+      _debugSource: { fileName: '/src/App.tsx', lineNumber: 1, columnNumber: 0 },
+    }
+    const result = extractSourceLocation(fiber)
+    expect(result).toEqual({ file: '/src/App.tsx', line: 1, column: 0 })
+  })
+
+  test('returns null when props is not an object', () => {
+    const fiber = { memoizedProps: null }
+    expect(extractSourceLocation(fiber)).toBeNull()
+  })
+
+  test('ignores __callerSource with missing fileName', () => {
+    const fiber = {
+      memoizedProps: {
+        __callerSource: { lineNumber: 5 },
+      },
+    }
+    expect(extractSourceLocation(fiber, { includeBabelInjectedCallerSource: true })).toBeNull()
   })
 })

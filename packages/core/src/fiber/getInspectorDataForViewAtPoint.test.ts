@@ -54,4 +54,38 @@ describe('getInspectorDataForViewAtPoint', () => {
     expect(first).toBeNull()
     expect(first).toBe(second)
   })
+
+  test('cached null prevents subsequent resolver calls', () => {
+    let callCount = 0
+    __setResolverForTests(() => {
+      callCount++
+      return null
+    })
+    getInspectorDataForViewAtPoint()
+    expect(callCount).toBe(2)
+
+    const stub: GetInspectorDataForViewAtPointFn = vi.fn()
+    __setResolverForTests(() => stub)
+    expect(getInspectorDataForViewAtPoint()).toBeNull()
+    expect(callCount).toBe(2)
+  })
+
+  test('resolves default export from module', () => {
+    const fn: GetInspectorDataForViewAtPointFn = vi.fn()
+    __setResolverForTests((path) => (path === NEW_ARCH_PATH ? fn : null))
+    expect(getInspectorDataForViewAtPoint()).toBe(fn)
+  })
+
+  test('falls through to old-arch when new-arch resolver returns null', () => {
+    const oldFn: GetInspectorDataForViewAtPointFn = vi.fn()
+    const resolveCallPaths: string[] = []
+    __setResolverForTests((path) => {
+      resolveCallPaths.push(path)
+      if (path === OLD_ARCH_PATH) return oldFn
+      return null
+    })
+    const result = getInspectorDataForViewAtPoint()
+    expect(result).toBe(oldFn)
+    expect(resolveCallPaths).toEqual([NEW_ARCH_PATH, OLD_ARCH_PATH])
+  })
 })

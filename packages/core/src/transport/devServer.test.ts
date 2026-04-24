@@ -37,4 +37,30 @@ describe('resolveDevServerBase', () => {
     __setTestOverrides('node', null)
     expect(resolveDevServerBase()).toBe('http://localhost:8081')
   })
+
+  test('falls back to localhost:8081 for web platform', () => {
+    __setTestOverrides('web', null)
+    expect(resolveDevServerBase()).toBe('http://localhost:8081')
+  })
+
+  test('ignores malformed scriptURL and falls back to platform default', () => {
+    __setTestOverrides('ios', {
+      SourceCode: {
+        scriptURL: 'not-a-valid-url',
+      },
+    })
+    expect(resolveDevServerBase()).toBe('http://localhost:8081')
+  })
+
+  test('handles SourceCode with undefined scriptURL', () => {
+    __setTestOverrides('ios', {
+      SourceCode: { scriptURL: undefined },
+    })
+    expect(resolveDevServerBase()).toBe('http://localhost:8081')
+  })
+
+  test('handles empty NativeModules object', () => {
+    __setTestOverrides('android', {})
+    expect(resolveDevServerBase()).toBe('http://10.0.2.2:8081')
+  })
 })

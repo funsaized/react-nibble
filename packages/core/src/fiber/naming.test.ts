@@ -44,4 +44,26 @@ describe('getComponentName', () => {
   test('returns Unknown for empty fiber', () => {
     expect(getComponentName({})).toBe('Unknown')
   })
+
+  test('returns name from object type when displayName is absent', () => {
+    expect(getComponentName({ type: { name: 'ForwardedInput' } })).toBe('ForwardedInput')
+  })
+
+  test('prefers displayName over name on object type', () => {
+    expect(getComponentName({ type: { displayName: 'DisplayName', name: 'InternalName' } })).toBe(
+      'DisplayName'
+    )
+  })
+
+  test('returns Unknown for type that is number', () => {
+    expect(getComponentName({ type: 42 })).toBe('Unknown')
+  })
+
+  test('skips object type with empty displayName and empty name', () => {
+    expect(getComponentName({ type: { displayName: '', name: '' } })).toBe('Unknown')
+  })
+
+  test('returns elementType name when type is not useful', () => {
+    expect(getComponentName({ type: 42, elementType: { name: 'LazyLoaded' } })).toBe('LazyLoaded')
+  })
 })
