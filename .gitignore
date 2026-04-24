@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# OS
+.DS_Store
+
+# Build output
+dist/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Logs
+*.log
+
+# Environment
+.env*.local
+
+# Tamagui
+.tamagui/
+
+# iOS
+ios/build/
+
+# Android
+android/build/
+android/.gradle/
+
+# Expo
+.expo/
+
+# IDEs
+.idea/
+.vscode/settings.json
+
+# Changesets
+.changeset/pre.json
+
+# Sisyphus evidence
+.sisyphus/evidence/
