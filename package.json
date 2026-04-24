@@ -4,8 +4,7 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/*",
-    "examples/*"
+    "packages/*"
   ],
   "packageManager": "bun@1.3.9",
   "engines": {
