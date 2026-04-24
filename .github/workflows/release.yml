@@ -22,7 +22,18 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
       - run: bun install --frozen-lockfile
-      - uses: changesets/action@v1
+      - name: Check if release is ready
+        id: check
+        run: |
+          if [ -z "$(ls -A .changeset/ 2>/dev/null | grep -v config.json | grep -v README.md)" ]; then
+            echo "no_changesets=true" >> $GITHUB_OUTPUT
+          fi
+          if [ ! -d "packages/react-nibble" ]; then
+            echo "no_facade=true" >> $GITHUB_OUTPUT
+          fi
+      - name: Create Release Pull Request or Publish
+        if: steps.check.outputs.no_changesets != 'true' && steps.check.outputs.no_facade != 'true'
+        uses: changesets/action@v1
         with:
           publish: bunx changeset publish
         env:
