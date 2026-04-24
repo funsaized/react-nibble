@@ -1,6 +1,6 @@
 {
   "name": "react-nibble",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "RN inspector with Zed-first app→editor navigation and first-class Tamagui + One framework integration",
   "license": "MIT",
   "author": "funsaized",
