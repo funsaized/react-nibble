@@ -1,7 +1,16 @@
 import { useCallback, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
-import type { InspectorCandidate, InspectorConfig, OpenSourceClient, SourceLocation } from '@react-nibble/core'
-import { HttpOpenSourceClient, buildCandidates, getInspectorDataForViewAtPoint } from '@react-nibble/core'
+import type {
+  InspectorCandidate,
+  InspectorConfig,
+  OpenSourceClient,
+  SourceLocation,
+} from '@react-nibble/core'
+import {
+  HttpOpenSourceClient,
+  buildCandidates,
+  getInspectorDataForViewAtPoint,
+} from '@react-nibble/core'
 import { useColorScheme } from 'react-native'
 import { InspectorProvider, useInspector } from './context.js'
 import { OverlayLayer } from './OverlayLayer.js'
@@ -39,7 +48,12 @@ function InspectorBody({
 }) {
   const { isActive, setActive, lastCandidates, setCandidates } = useInspector()
   const [pickerOpen, setPickerOpen] = useState(false)
-  const [frame, setFrame] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
+  const [frame, setFrame] = useState<{
+    x: number
+    y: number
+    width: number
+    height: number
+  } | null>(null)
   const [currentLabel, setCurrentLabel] = useState<string | undefined>(undefined)
   const scheme = useColorScheme()
   const isDark = scheme === 'dark'
@@ -59,7 +73,9 @@ function InspectorBody({
       if (candidates.length > 0) {
         const c = candidates[0]!
         if (c.source) {
-          setCurrentLabel(`${c.name} — ${c.source.file.split('/').pop() ?? ''}:${String(c.source.line)}`)
+          setCurrentLabel(
+            `${c.name} — ${c.source.file.split('/').pop() ?? ''}:${String(c.source.line)}`
+          )
         }
         setFrame({ x, y, width: 0, height: 0 })
         setPickerOpen(true)

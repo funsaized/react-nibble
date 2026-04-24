@@ -18,27 +18,26 @@ const BASE_STYLE: ViewStyle = {
   zIndex: 2147483640,
 }
 
-export const TouchCaptureLayer = forwardRef<View, TouchCaptureLayerProps>(function TouchCaptureLayer(
-  { isActive, onTap, style, testID },
-  ref
-) {
-  const handleRelease = useCallback(
-    (event: GestureResponderEvent) => {
-      const { pageX, pageY } = event.nativeEvent
-      onTap(pageX, pageY)
-    },
-    [onTap]
-  )
+export const TouchCaptureLayer = forwardRef<View, TouchCaptureLayerProps>(
+  function TouchCaptureLayer({ isActive, onTap, style, testID }, ref) {
+    const handleRelease = useCallback(
+      (event: GestureResponderEvent) => {
+        const { pageX, pageY } = event.nativeEvent
+        onTap(pageX, pageY)
+      },
+      [onTap]
+    )
 
-  return (
-    <RNView
-      ref={ref}
-      testID={testID ?? 'nibble-touch-capture'}
-      style={[BASE_STYLE, style]}
-      pointerEvents={isActive ? 'auto' : 'none'}
-      onStartShouldSetResponder={() => isActive}
-      onResponderGrant={() => {}}
-      onResponderRelease={handleRelease}
-    />
-  )
-})
+    return (
+      <RNView
+        ref={ref}
+        testID={testID ?? 'nibble-touch-capture'}
+        style={[BASE_STYLE, style]}
+        pointerEvents={isActive ? 'auto' : 'none'}
+        onStartShouldSetResponder={() => isActive}
+        onResponderGrant={() => {}}
+        onResponderRelease={handleRelease}
+      />
+    )
+  }
+)

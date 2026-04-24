@@ -102,10 +102,7 @@ export function PickerDialog({
                     <Pressable
                       onPress={() => onOpen(c)}
                       disabled={!c.source}
-                      style={[
-                        styles.btn,
-                        { backgroundColor: c.source ? t.accentColor : '#444' },
-                      ]}
+                      style={[styles.btn, { backgroundColor: c.source ? t.accentColor : '#444' }]}
                       testID={`nibble-picker-open-${String(idx)}`}
                     >
                       <RNText style={styles.btnText}>

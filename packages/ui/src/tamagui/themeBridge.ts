@@ -48,9 +48,11 @@ export function resolveInspectorTokens(
   isDark: boolean
 ): Required<InspectorTokenOverrides> {
   return {
-    overlayColor: overrides?.overlayColor ?? (isDark ? 'rgba(100, 140, 255, 0.2)' : 'rgba(60, 100, 255, 0.18)'),
+    overlayColor:
+      overrides?.overlayColor ?? (isDark ? 'rgba(100, 140, 255, 0.2)' : 'rgba(60, 100, 255, 0.18)'),
     overlayBorderColor:
-      overrides?.overlayBorderColor ?? (isDark ? 'rgba(100, 140, 255, 0.9)' : 'rgba(40, 80, 220, 0.9)'),
+      overrides?.overlayBorderColor ??
+      (isDark ? 'rgba(100, 140, 255, 0.9)' : 'rgba(40, 80, 220, 0.9)'),
     tagBackground:
       overrides?.tagBackground ?? (isDark ? 'rgba(20, 20, 20, 0.95)' : 'rgba(30, 30, 30, 0.92)'),
     tagForeground: overrides?.tagForeground ?? '#ffffff',

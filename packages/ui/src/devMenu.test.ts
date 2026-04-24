@@ -1,9 +1,5 @@
 import { afterEach, describe, expect, test, vi } from 'vitest'
-import {
-  registerDevMenu,
-  __resetDevMenuForTests,
-  __setDevSettingsForTests,
-} from './devMenu.js'
+import { registerDevMenu, __resetDevMenuForTests, __setDevSettingsForTests } from './devMenu.js'
 
 afterEach(() => {
   __resetDevMenuForTests()
