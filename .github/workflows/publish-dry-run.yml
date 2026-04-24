@@ -18,7 +18,12 @@ jobs:
         with:
           node-version: '22'
       - run: bun install --frozen-lockfile
-      - run: bun run --filter react-nibble build
+      - name: Build all workspace packages (facade depends on sibling dist/)
+        run: |
+          bun run --filter '@react-nibble/core' build
+          bun run --filter '@react-nibble/server' build
+          bun run --filter '@react-nibble/ui' build
+          bun run --filter react-nibble build
 
       - name: npm publish --dry-run (facade)
         working-directory: packages/react-nibble
