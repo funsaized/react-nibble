@@ -21,16 +21,16 @@ bun install
 
 ## Common Commands
 
-| Command | Description |
-|---------|-------------|
-| `bun lint` | Run ESLint |
-| `bun lint:fix` | Run ESLint with auto-fix |
-| `bun format` | Format code with Prettier |
-| `bun format:check` | Check formatting |
-| `bun typecheck` | Run TypeScript type checking |
-| `bun test` | Run tests |
-| `bun test:coverage` | Run tests with coverage |
-| `bun build` | Build all packages |
+| Command             | Description                  |
+| ------------------- | ---------------------------- |
+| `bun lint`          | Run ESLint                   |
+| `bun lint:fix`      | Run ESLint with auto-fix     |
+| `bun format`        | Format code with Prettier    |
+| `bun format:check`  | Check formatting             |
+| `bun typecheck`     | Run TypeScript type checking |
+| `bun test`          | Run tests                    |
+| `bun test:coverage` | Run tests with coverage      |
+| `bun build`         | Build all packages           |
 
 ## Branching
 

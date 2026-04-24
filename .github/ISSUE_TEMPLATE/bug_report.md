@@ -9,12 +9,14 @@ labels: bug
 A clear description of the unexpected behavior.
 
 **Reproduction steps**
+
 1. ...
 2. ...
 
 **Expected behavior**
 
 **Environment**
+
 - react-nibble version:
 - React Native version:
 - Tamagui version:
