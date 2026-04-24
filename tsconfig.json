@@ -1,1 +1,4 @@
-{ "include": [], "references": [{ "path": "./packages/core" }] }
+{
+  "include": [],
+  "references": [{ "path": "./packages/core" }, { "path": "./packages/server" }]
+}
