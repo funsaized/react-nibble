@@ -25,10 +25,7 @@ export function parseTestIdForSource(testId: string): CodeInfo | null {
   }
 }
 
-export function parseCallerSource(
-  callerSource: unknown,
-  componentName?: string
-): CodeInfo | null {
+export function parseCallerSource(callerSource: unknown, componentName?: string): CodeInfo | null {
   if (!callerSource || typeof callerSource !== 'object') return null
   const obj = callerSource as { fileName?: string; lineNumber?: number; columnNumber?: number }
   if (!obj.fileName) return null

@@ -2,7 +2,14 @@ export type InspectorHierarchyEntry = {
   name?: string
   getInspectorData?: () => {
     measure?: (
-      cb: (x: number, y: number, width: number, height: number, pageX: number, pageY: number) => void
+      cb: (
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        pageX: number,
+        pageY: number
+      ) => void
     ) => void
     props?: Record<string, unknown>
     source?: { fileName: string; lineNumber: number; columnNumber?: number }

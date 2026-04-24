@@ -7,7 +7,10 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["src", "dist"],
+  "files": [
+    "src",
+    "dist"
+  ],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -27,6 +30,8 @@
     "react-native": ">=0.73.0"
   },
   "peerDependenciesMeta": {
-    "react-native": { "optional": true }
+    "react-native": {
+      "optional": true
+    }
   }
 }

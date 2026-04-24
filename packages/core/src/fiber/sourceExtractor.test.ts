@@ -85,9 +85,7 @@ describe('extractSourceLocation', () => {
         __callerSource: { fileName: '/abs/Card.tsx', lineNumber: 5, columnNumber: 3 },
       },
     }
-    expect(
-      extractSourceLocation(fiber, { includeBabelInjectedCallerSource: true })
-    ).toEqual({
+    expect(extractSourceLocation(fiber, { includeBabelInjectedCallerSource: true })).toEqual({
       file: '/abs/Card.tsx',
       line: 5,
       column: 3,
